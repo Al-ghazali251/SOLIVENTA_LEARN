@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "apiHostname": "api.learn.soliventa.tech",
+  "tenants": [
+    { "id": "10000000-0000-4000-8000-000000000001", "code": "horizon", "name": "Northstar Learning School", "template": "horizon", "publicHostname": "horizon.learn.soliventa.tech", "portalHostname": "portal.horizon.learn.soliventa.tech" },
+    { "id": "20000000-0000-4000-8000-000000000002", "code": "crest", "name": "St. Aurelia College", "template": "crest", "publicHostname": "crest.learn.soliventa.tech", "portalHostname": "portal.crest.learn.soliventa.tech" },
+    { "id": "30000000-0000-4000-8000-000000000003", "code": "meridian", "name": "Meridian International Academy", "template": "atlas", "publicHostname": "meridian.learn.soliventa.tech", "portalHostname": "portal.meridian.learn.soliventa.tech" },
+    { "id": "40000000-0000-4000-8000-000000000004", "code": "mosaic", "name": "Bloomfield Community School", "template": "mosaic", "publicHostname": "mosaic.learn.soliventa.tech", "portalHostname": "portal.mosaic.learn.soliventa.tech" },
+    { "id": "50000000-0000-4000-8000-000000000005", "code": "vector", "name": "Vector Academy", "template": "editorial", "publicHostname": "vector.learn.soliventa.tech", "portalHostname": "portal.vector.learn.soliventa.tech" }
+  ]
+}

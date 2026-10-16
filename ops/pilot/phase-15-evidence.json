@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "stagingDeployment": { "status": "not-run", "evidence": null },
+  "representativeTenants": { "status": "prepared-not-provisioned", "evidence": null },
+  "sanitizedImport": { "status": "synthetic-generator-ready", "evidence": null },
+  "parallelVerification": { "status": "ready-not-run", "discrepancies": [] },
+  "pilotSchool": { "status": "not-selected", "school": null, "approval": null },
+  "supportReadiness": { "status": "not-trained", "evidence": null },
+  "migrationRepeatability": { "status": "prepared-not-demonstrated", "evidence": null },
+  "rollbackExercise": { "status": "not-run", "evidence": null },
+  "cohort": "internal",
+  "generalAvailability": false
+}

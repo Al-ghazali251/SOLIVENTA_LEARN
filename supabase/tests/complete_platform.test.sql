@@ -1,0 +1,17 @@
+begin;
+create extension if not exists pgtap with schema extensions;
+set search_path=public,extensions;
+select plan(6);
+insert into public.admission_applications(school_id,application_number,applicant_name,status) values('aaaaaaaa-0000-0000-0000-000000000001','M4-A','Milestone Applicant','submitted');
+insert into public.library_books(id,school_id,accession_number,title,author,total_copies,available_copies) values('41000000-0000-4000-8000-000000000001','aaaaaaaa-0000-0000-0000-000000000001','BOOK-M4','Tenant Safety','Soliventa',2,2);
+set local role authenticated;
+select set_config('request.jwt.claim.sub','10000000-0000-0000-0000-000000000001',true);
+select is((select count(*)::integer from public.admission_applications),1,'School A administrator sees School A applications');
+select is((select count(*)::integer from public.library_books),1,'School A administrator sees School A books');
+select set_config('request.jwt.claim.sub','20000000-0000-0000-0000-000000000001',true);
+select is((select count(*)::integer from public.admission_applications),0,'School B administrator cannot see School A applications');
+select is((select count(*)::integer from public.library_books),0,'School B administrator cannot see School A books');
+reset role;
+select throws_ok($$update public.library_books set school_id='bbbbbbbb-0000-0000-0000-000000000001' where id='41000000-0000-4000-8000-000000000001'$$,'23514','school_id is immutable','book tenant cannot change');
+select throws_ok($$insert into public.library_loans(school_id,book_id,borrower_user_id,due_at,issued_by) values('bbbbbbbb-0000-0000-0000-000000000001','41000000-0000-4000-8000-000000000001','20000000-0000-0000-0000-000000000001',now()+interval '7 days','20000000-0000-0000-0000-000000000001')$$,'23503',null,'cross-school loan rejected');
+select * from finish(); rollback;

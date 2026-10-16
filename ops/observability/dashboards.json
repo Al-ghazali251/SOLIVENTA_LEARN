@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "dataset": "soliventa_learn_metrics",
+  "dimensions": [
+    "environment",
+    "schoolId",
+    "hostname",
+    "route",
+    "method",
+    "status",
+    "errorCode",
+    "operation",
+    "outcome"
+  ],
+  "dashboards": [
+    {
+      "id": "platform-health",
+      "widgets": [
+        "request-rate",
+        "error-rate",
+        "latency-p50-p95-p99",
+        "cache-hit-rate",
+        "database-latency",
+        "authentication-failures",
+        "rate-limits",
+        "payment-outcomes",
+        "job-outcomes",
+        "certificate-status"
+      ]
+    },
+    {
+      "id": "tenant-health",
+      "filter": "index1 = schoolId",
+      "widgets": [
+        "request-rate",
+        "error-rate",
+        "latency-p95",
+        "cache-hit-rate",
+        "frontend-errors",
+        "job-outcomes",
+        "domain-status"
+      ]
+    },
+    {
+      "id": "public-experience",
+      "source": "Cloudflare Web Analytics",
+      "widgets": ["LCP-p75", "INP-p75", "CLS-p75", "device", "country", "hostname"]
+    }
+  ]
+}

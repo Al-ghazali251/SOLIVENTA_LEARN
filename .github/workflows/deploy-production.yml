@@ -1,0 +1,65 @@
+name: Deploy production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: production-api
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Migrate database and deploy API
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 30
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      TENANT_CACHE_KV_ID: ${{ secrets.TENANT_CACHE_KV_ID }}
+      RATE_LIMIT_NAMESPACE_ID: ${{ secrets.RATE_LIMIT_NAMESPACE_ID }}
+      PREVIEW_TOKEN_SECRET: ${{ secrets.PREVIEW_TOKEN_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.23.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate application
+        run: |
+          pnpm typecheck
+          pnpm test
+          pnpm build
+
+      - name: Require production secrets
+        shell: bash
+        run: |
+          required=(CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID SUPABASE_DB_URL TENANT_CACHE_KV_ID RATE_LIMIT_NAMESPACE_ID PREVIEW_TOKEN_SECRET)
+          for name in "${required[@]}"; do
+            if [[ -z "${!name}" ]]; then
+              echo "::error::Missing required production secret: $name"
+              exit 1
+            fi
+          done
+
+      - name: Apply forward database migrations
+        run: pnpm exec supabase db push --db-url "$SUPABASE_DB_URL"
+
+      - name: Deploy API Worker
+        run: pnpm production:deploy

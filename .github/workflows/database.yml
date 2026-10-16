@@ -1,0 +1,44 @@
+name: Database
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/**'
+      - 'docs/greenfield-data-model.md'
+      - 'docs/forward-migrations.md'
+      - '.github/workflows/database.yml'
+  push:
+    branches: [main, staging]
+    paths:
+      - 'supabase/**'
+      - '.github/workflows/database.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  clean-baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.23.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:start
+      - run: pnpm db:reset
+      - run: pnpm db:lint
+      - id: database-tests
+        continue-on-error: true
+        run: pnpm db:test 2>&1 | tee database-test.log
+      - if: steps.database-tests.outcome == 'failure'
+        run: |
+          message=$(tail -n 80 database-test.log | tr '\n' '|' | sed 's/%/%25/g; s/\r/%0D/g; s/|/%0A/g')
+          echo "::error title=Database security tests failed::$message"
+          exit 1
+      - if: always()
+        run: pnpm db:stop

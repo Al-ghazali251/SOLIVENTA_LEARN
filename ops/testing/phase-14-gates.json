@@ -1,0 +1,35 @@
+{
+  "unit": {
+    "status": "implemented",
+    "command": "pnpm test"
+  },
+  "databaseSecurity": {
+    "status": "implemented",
+    "command": "pnpm db:test"
+  },
+  "hostedIntegration": {
+    "status": "implemented",
+    "command": "pnpm test:hosted"
+  },
+  "browserDemo": {
+    "status": "implemented",
+    "command": "pnpm --dir ../soliventa-learn-web demo:verify"
+  },
+  "performance": {
+    "status": "implemented-not-executed",
+    "command": "pnpm test:performance"
+  },
+  "recovery": {
+    "status": "not-demonstrated",
+    "command": null
+  },
+  "milestone3": {
+    "login": "implemented",
+    "classes": "implementation-candidate",
+    "students": "implementation-candidate",
+    "staff": "implementation-candidate",
+    "attendance": "implementation-candidate",
+    "results": "implementation-candidate",
+    "fees": "implementation-candidate"
+  }
+}

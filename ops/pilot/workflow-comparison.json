@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "workflows": [
+    {
+      "id": "staff.create",
+      "status": "blocked",
+      "legacyEvidence": null,
+      "newEvidence": null,
+      "discrepancies": []
+    },
+    {
+      "id": "student.create",
+      "status": "blocked",
+      "legacyEvidence": null,
+      "newEvidence": null,
+      "discrepancies": []
+    },
+    {
+      "id": "attendance.record",
+      "status": "blocked",
+      "legacyEvidence": null,
+      "newEvidence": null,
+      "discrepancies": []
+    },
+    {
+      "id": "results.calculate-release",
+      "status": "blocked",
+      "legacyEvidence": null,
+      "newEvidence": null,
+      "discrepancies": []
+    },
+    {
+      "id": "fees.invoice-payment-receipt",
+      "status": "blocked",
+      "legacyEvidence": null,
+      "newEvidence": null,
+      "discrepancies": []
+    },
+    {
+      "id": "website.publish",
+      "status": "ready",
+      "legacyEvidence": null,
+      "newEvidence": null,
+      "discrepancies": []
+    },
+    {
+      "id": "domain.configure",
+      "status": "ready",
+      "legacyEvidence": null,
+      "newEvidence": null,
+      "discrepancies": []
+    }
+  ]
+}

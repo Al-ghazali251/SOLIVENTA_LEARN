@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "destinationEnvironmentVariable": "OPERATIONS_ALERT_WEBHOOK",
+  "alerts": [
+    {
+      "id": "elevated-5xx",
+      "severity": "page",
+      "windowMinutes": 5,
+      "threshold": "error_rate >= 0.02 and requests >= 100"
+    },
+    {
+      "id": "authentication-anomaly",
+      "severity": "page",
+      "windowMinutes": 10,
+      "threshold": "AUTH_* failures >= 50 or >= 3x seven-day baseline"
+    },
+    {
+      "id": "cross-tenant-test-failure",
+      "severity": "page",
+      "windowMinutes": 0,
+      "threshold": "any CI security suite failure"
+    },
+    {
+      "id": "payment-verification-failure",
+      "severity": "page",
+      "windowMinutes": 10,
+      "threshold": "failed >= 5 or failure_rate >= 0.05"
+    },
+    {
+      "id": "database-connection-failure",
+      "severity": "page",
+      "windowMinutes": 5,
+      "threshold": "database_request failure_rate >= 0.02"
+    },
+    {
+      "id": "background-queue-buildup",
+      "severity": "page",
+      "windowMinutes": 10,
+      "threshold": "oldest_message_seconds >= 300 or backlog >= 1000"
+    },
+    {
+      "id": "domain-certificate-failure",
+      "severity": "page",
+      "windowMinutes": 5,
+      "threshold": "any certificate failed or expired"
+    },
+    {
+      "id": "public-lcp-regression",
+      "severity": "ticket",
+      "windowMinutes": 60,
+      "threshold": "LCP p75 >= 2500ms by template with >= 100 views"
+    },
+    {
+      "id": "backup-failure",
+      "severity": "page",
+      "windowMinutes": 1440,
+      "threshold": "latest verified restore/backup heartbeat older than policy"
+    }
+  ]
+}

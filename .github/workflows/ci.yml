@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, staging]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.23.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm check:boundaries
+      - run: pnpm contract:check
+      - run: pnpm contract:compatibility
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm test:integration
+      - run: pnpm phase14:status
+      - run: pnpm phase15:status
+      - run: pnpm build
+      - name: Measure staging bootstrap latency
+        if: github.ref == 'refs/heads/staging' && vars.STAGING_BOOTSTRAP_URL != ''
+        run: pnpm bootstrap:measure
+        env:
+          STAGING_BOOTSTRAP_URL: ${{ vars.STAGING_BOOTSTRAP_URL }}
+          BOOTSTRAP_MAX_P95_MS: ${{ vars.BOOTSTRAP_MAX_P95_MS || '500' }}

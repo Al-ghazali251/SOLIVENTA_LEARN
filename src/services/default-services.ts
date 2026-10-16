@@ -1,0 +1,95 @@
+import { adminGateway } from '../integrations/supabase/admin-client';
+import { supabaseTokenVerifier } from '../integrations/supabase/token-verifier';
+import type { BackendServices } from './contracts';
+
+export const defaultServices: BackendServices = Object.freeze({
+  tenantDirectory: { findActiveByHostname: adminGateway.findActiveTenant },
+  tokenVerifier: supabaseTokenVerifier,
+  membershipDirectory: {
+    findForUser: adminGateway.findMembership,
+    resolveSupportSession: adminGateway.resolveSupportSession,
+    auditSupportRequest: adminGateway.auditSupportRequest,
+  },
+  readinessProbe: { check: adminGateway.checkReadiness },
+  bootstrapDirectory: {
+    loadPublic: adminGateway.loadPublicBootstrap,
+    loadPortal: adminGateway.loadPortalBootstrap,
+  },
+  configurationStudio: {
+    getWorkspace: adminGateway.configurationWorkspace,
+    uploadAsset: adminGateway.uploadAsset,
+    saveDraft: adminGateway.saveConfigurationDraft,
+    publish: adminGateway.publishStudioConfiguration,
+    cloneVersion: adminGateway.cloneStudioVersion,
+    loadPreview: adminGateway.loadStudioPreview,
+  },
+  academicStructure: {
+    workspace: adminGateway.academicWorkspace,
+    save: adminGateway.saveAcademicRecord,
+    remove: adminGateway.removeAcademicRecord,
+    replaceClassSubjects: adminGateway.replaceClassSubjects,
+    assignClassTeacher: adminGateway.assignClassTeacher,
+    replaceTeacherAssignments: adminGateway.replaceTeacherAssignments,
+    manageEnrollment: adminGateway.manageEnrollment,
+    bulkPromote: adminGateway.bulkPromote,
+  },
+  domainDirectory: {
+    list: adminGateway.listDomains,
+    provisionDefaults: adminGateway.provisionDefaultDomains,
+    createCustom: adminGateway.createCustomDomain,
+    updateProviderState: adminGateway.updateDomainProviderState,
+    setPrimary: adminGateway.setPrimaryDomain,
+    markRemoved: adminGateway.markDomainRemoved,
+    reconciliationCandidates: adminGateway.reconciliationCandidates,
+    updateProviderStateAsSystem: adminGateway.updateProviderStateAsSystem,
+  },
+  jobs: {
+    create: adminGateway.createBackgroundJob,
+    get: adminGateway.getBackgroundJob,
+    start: adminGateway.startBackgroundJob,
+    succeed: adminGateway.succeedBackgroundJob,
+    fail: adminGateway.failBackgroundJob,
+    deadLetter: adminGateway.deadLetterBackgroundJob,
+  },
+  corePortal: {
+    workspace: adminGateway.corePortalWorkspace,
+    execute: adminGateway.executeCorePortalCommand,
+  },
+  payments: {
+    verifyReceipt: adminGateway.verifyPaymentReceipt,
+    canInitiate: adminGateway.canInitiateOnlinePayment,
+    prepare: adminGateway.prepareOnlinePayment,
+    attachAuthorization: adminGateway.attachPaymentAuthorization,
+    findByReference: adminGateway.findPaymentTransaction,
+    settle: adminGateway.settleOnlinePayment,
+    fail: adminGateway.failOnlinePayment,
+    submitManual: adminGateway.submitManualTransfer,
+    reviewManual: adminGateway.reviewManualTransfer,
+  },
+  completePlatform: {
+    submitContact: adminGateway.submitPublicContact,
+    submitAdmission: adminGateway.submitPublicAdmission,
+    initializeAdmissionPayment: adminGateway.initializeAdmissionPayment,
+    recordAdmissionBankTransfer: adminGateway.recordAdmissionBankTransfer,
+    verifyAdmissionPayment: adminGateway.verifyAdmissionPayment,
+    verifyAdmissionPaymentByReference: adminGateway.verifyAdmissionPaymentByReference,
+    getAdmissionStatus: adminGateway.getAdmissionStatus,
+    workspace: adminGateway.completePlatformWorkspace,
+    execute: adminGateway.executeCompletePlatformCommand,
+  },
+  platformStudio: {
+    workspace: adminGateway.platformStudioWorkspace,
+    execute: adminGateway.executePlatformStudioCommand,
+  },
+  applicant: {
+    workspace: adminGateway.applicantWorkspace,
+    execute: adminGateway.executeApplicantCommand,
+  },
+  communications: {
+    search: adminGateway.scopedSearch,
+    notifications: adminGateway.notifications,
+    readNotification: adminGateway.readNotification,
+    startSupport: adminGateway.startSupportSession,
+    endSupport: adminGateway.endSupportSession,
+  },
+});

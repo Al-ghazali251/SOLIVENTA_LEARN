@@ -1,0 +1,119 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+  "name": "soliventa-learn-api",
+  "main": "src/worker.ts",
+  "workers_dev": false,
+	"compatibility_date": "2026-08-20",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"observability": {
+		"enabled": true
+	},
+	"routes": [
+		{
+			"pattern": "api.learn.soliventa.tech",
+			"custom_domain": true
+		},
+		{
+			"pattern": "platform.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		},
+		{
+			"pattern": "horizon.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		},
+		{
+			"pattern": "portal.horizon.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		},
+		{
+			"pattern": "crest.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		},
+		{
+			"pattern": "portal.crest.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		},
+		{
+			"pattern": "meridian.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		},
+		{
+			"pattern": "portal.meridian.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		},
+		{
+			"pattern": "mosaic.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		},
+		{
+			"pattern": "portal.mosaic.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		},
+		{
+			"pattern": "vector.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		},
+		{
+			"pattern": "portal.vector.learn.soliventa.tech/api/*",
+			"zone_name": "soliventa.tech"
+		}
+	],
+	"vars": {
+		"OPENROUTER_DATA_COLLECTION": "allow",
+		"APP_ENV": "production",
+		"APP_ORIGIN": "https://learn.soliventa.tech",
+		"PORTAL_ORIGIN": "https://portal.learn.soliventa.tech",
+		"PLATFORM_HOSTNAMES": "api.learn.soliventa.tech,platform.learn.soliventa.tech",
+		"PLATFORM_BASE_DOMAIN": "learn.soliventa.tech",
+		"PREVIEW_ORIGIN": "https://preview.learn.soliventa.tech"
+	},
+	"triggers": {
+		"crons": [
+			"*/15 * * * *"
+		]
+	},
+	"queues": {
+		"producers": [
+			{
+				"binding": "JOB_QUEUE",
+				"queue": "soliventa-learn-jobs"
+			}
+		],
+		"consumers": [
+			{
+				"queue": "soliventa-learn-jobs",
+				"max_batch_size": 3,
+				"max_batch_timeout": 5,
+				"max_retries": 3,
+				"retry_delay": 30,
+				"dead_letter_queue": "soliventa-learn-jobs-dlq",
+			},
+			{
+				"queue": "soliventa-learn-jobs-dlq",
+				"max_batch_size": 10,
+				"max_batch_timeout": 5,
+				"max_retries": 1,
+			},
+		],
+	},
+	"analytics_engine_datasets": [
+		{
+			"binding": "METRICS",
+			"dataset": "soliventa_learn_metrics"
+		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "soliventa_learn_tenant_cache",
+			"id": "e4051536b5ad4049b46991f2b3f0b890",
+			"remote": true
+		},
+		{
+			"binding": "soliventa_learn_site_sessions",
+			"id": "01626a58f1d741889be825ed312dad7f",
+			"remote": true
+		}
+	],
+}

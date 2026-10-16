@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+.wrangler/
+supabase/.temp/
+.dev.vars
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.idea/
+.vscode/
+ops/production/wrangler.generated.json

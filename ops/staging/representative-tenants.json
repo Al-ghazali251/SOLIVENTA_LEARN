@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "tenants": [
+    {
+      "id": "15000000-0000-4000-8000-000000000001",
+      "code": "seedling-primary",
+      "name": "Seedling Primary School",
+      "scenario": "small-primary",
+      "template": "classic-school",
+      "studentCount": 40,
+      "payments": false,
+      "branding": { "primary": "#24553D", "secondary": "#F3D36A", "accent": "#D97941" }
+    },
+    {
+      "id": "15000000-0000-4000-8000-000000000002",
+      "code": "summit-secondary",
+      "name": "Summit Secondary School",
+      "scenario": "large-secondary",
+      "template": "modern-academy",
+      "studentCount": 1500,
+      "payments": true,
+      "branding": { "primary": "#183B66", "secondary": "#E9B44C", "accent": "#2A9D8F" }
+    },
+    {
+      "id": "15000000-0000-4000-8000-000000000003",
+      "code": "harbour-college",
+      "name": "Harbour College",
+      "scenario": "custom-domain",
+      "template": "minimal-college",
+      "studentCount": 220,
+      "payments": false,
+      "customDomain": "learn.harbour-college.example",
+      "branding": { "primary": "#172554", "secondary": "#DBEAFE", "accent": "#2563EB" }
+    },
+    {
+      "id": "15000000-0000-4000-8000-000000000004",
+      "code": "cedar-school",
+      "name": "Cedar School",
+      "scenario": "portal-subdomain",
+      "template": "classic-school",
+      "studentCount": 180,
+      "payments": false,
+      "branding": { "primary": "#3F6212", "secondary": "#ECFCCB", "accent": "#84CC16" }
+    },
+    {
+      "id": "15000000-0000-4000-8000-000000000005",
+      "code": "meridian-academy",
+      "name": "Meridian Academy",
+      "scenario": "online-payment",
+      "template": "modern-academy",
+      "studentCount": 500,
+      "payments": true,
+      "branding": { "primary": "#4C1D95", "secondary": "#EDE9FE", "accent": "#7C3AED" }
+    },
+    {
+      "id": "15000000-0000-4000-8000-000000000006",
+      "code": "meadow-school",
+      "name": "Meadow School",
+      "scenario": "no-payment",
+      "template": "minimal-college",
+      "studentCount": 90,
+      "payments": false,
+      "branding": { "primary": "#134E4A", "secondary": "#CCFBF1", "accent": "#0D9488" }
+    },
+    {
+      "id": "15000000-0000-4000-8000-000000000007",
+      "code": "aurora-institute",
+      "name": "Aurora Institute",
+      "scenario": "extensive-branding",
+      "template": "modern-academy",
+      "studentCount": 320,
+      "payments": true,
+      "branding": { "primary": "#7F1D1D", "secondary": "#FEF3C7", "accent": "#D97706" }
+    }
+  ]
+}

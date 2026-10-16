@@ -1,0 +1,5 @@
+APP_ENV=staging
+CONFIRM_SYNTHETIC_STAGING_SEED=SOLIVENTA_STAGING_ONLY
+SUPABASE_URL=https://your-staging-project.supabase.co
+SUPABASE_SECRET_KEY=sb_secret_replace_me
+PLATFORM_BASE_DOMAIN=staging.schools.your-domain.example

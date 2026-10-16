@@ -1,0 +1,11 @@
+begin;
+create extension if not exists pgtap with schema extensions;
+set search_path=public,extensions;
+select plan(5);
+select has_table('public','background_jobs','durable jobs table exists');
+select has_table('public','background_job_attempts','job attempt history exists');
+select is((select count(*)::integer from pg_catalog.pg_class c join pg_catalog.pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relname in('background_jobs','background_job_attempts') and not c.relrowsecurity),0,'RLS protects job tables');
+select throws_ok($$insert into public.background_jobs(school_id,operation,idempotency_key,payload_digest) values('aaaaaaaa-0000-0000-0000-000000000001','cache.warm','short',repeat('a',64))$$,'23514',null,'short idempotency keys are rejected');
+insert into public.background_jobs(id,school_id,operation,idempotency_key,payload_digest) values('f0000000-0000-4000-8000-000000000001','aaaaaaaa-0000-0000-0000-000000000001','cache.warm','configuration-warm-0001',repeat('a',64));
+select throws_ok($$insert into public.background_jobs(school_id,operation,idempotency_key,payload_digest) values('aaaaaaaa-0000-0000-0000-000000000001','cache.warm','configuration-warm-0001',repeat('a',64))$$,'23505',null,'tenant operation idempotency keys are unique');
+select * from finish();rollback;
